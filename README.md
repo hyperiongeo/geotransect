@@ -17,5 +17,5 @@ Some of these dependencies have dependencies of their own, some of which are sub
 - [matplotlib Basemap](https://github.com/matplotlib/basemap) for maps
 - [Pillow](http://pillow.readthedocs.org/installation.html)
 - [obspy](https://github.com/obspy/obspy)
-- [agilegeo](https://github.com/agile-geoscience/agilegeo/tree/develop), for depth conversion (need **develop** branch at the moment)
+- [bruges](https://github.com/agile-geoscience/bruges/develop), for depth conversion (need **develop** branch at the moment)
 - [striplog](https://github.com/agile-geoscience/striplog)

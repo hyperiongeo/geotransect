@@ -15,7 +15,7 @@ import time
 # import matplotlib; matplotlib.use("WX")
 
 # Import required to avoid bug in Basemap
-from mpl_toolkits.basemap import Basemap
+# from mpl_toolkits.basemap import Basemap
 
 # 3rd party
 import matplotlib.pyplot as plt
@@ -29,7 +29,7 @@ from shapely.prepared import prep
 from obspy.segy.core import readSEGY
 
 # Other Agile libraries
-from agilegeo.avo import time_to_depth, depth_to_time
+from bruges.avo import time_to_depth, depth_to_time
 from striplog import Well, Lexicon
 
 from plot import plot
@@ -113,9 +113,9 @@ class TransectContainer(BaseContainer):
 
         super(TransectContainer, self).__init__(params)
 
-        print "Starting {}, id {}, file {}".format(self.title,
+        print("Starting {}, id {}, file {}".format(self.title,
                                                    self.id,
-                                                   self.config_file)
+                                                   self.config_file))
 
         # Set up 'data' — the transect line — from shapefile.
         self.data = None
@@ -249,7 +249,7 @@ class LocmapContainer(BaseContainer):
         # Go over the layers and collect data.
         for layer, details in self.layers.items():
             path = details['file']
-            print layer, path
+            print(layer, path)
 
             # Set up convenient params dictionary for plotting function.
             params = {k: v for k, v in details.items() if k != 'file'}
@@ -537,11 +537,11 @@ class SeismicContainer(SegyContainer):
                     traces.append(trace.data)
                     samp /= 1000.0
 
-            print name,
+            print(name)
             if traces:
-                print len(traces), "traces"
+                print(len(traces), "traces")
             else:
-                print ""
+                print("")
 
             struct = {"sample_interval": 1.0/samp,
                       "traces": np.transpose(np.array(traces))}
@@ -604,7 +604,7 @@ class HorizonContainer(BaseContainer):
         for horizon, points in self.lookup.items():
             l = len(points)
             points = filter(prepared.contains, points)
-            print horizon, len(points), "of", l, "points"
+            print(horizon, len(points), "of", l, "points")
             data, coords = [], []
             for p in points:
                 coords.append(transect.project(p))
@@ -671,7 +671,7 @@ class PotfieldContainer(BaseContainer):
         Notice.info("Updating " + self.__class__.__name__)
 
         for name, payload in self.data.items():
-            print name
+            print(name)
             payload['coords'] = self.linspace
             payload['data'] = np.zeros_like(self.linspace)
             if payload['colour_is_file']:
@@ -793,18 +793,18 @@ class LogContainer(BaseContainer):
         for point in points:
             name = self.lookup[point]
             self.names.append(name)
-            print name,
+            print(name)
 
             pattern = "^" + name + "_out.las"
             for fname in utils.walk(self.well_dir, pattern):
                 # This is a loop but there should only be one matching file.
                 well = Well(fname, null_subs=np.nan)
-                print well.curves.names
+                print(well.curves.names)
                 self.data.append(well)
                 self.log_lookup[name] = self.data[-1]
 
             if not self.log_lookup.get(name):
-                print
+                print()
                 self.data.append(None)
 
             sl_name = getattr(self, 'striplog', None)
